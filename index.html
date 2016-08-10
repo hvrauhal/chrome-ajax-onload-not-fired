@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="utf-8">
+    <title>foo</title>
+    <script src="/jquery.js"></script>
+    <script>
+        $(() => {
+            $('body').append($('<div>').text('jquery loaded'))
+            $.get('/staticjson').done(res => {
+                $('body').append($('<div>').text(`STAT (1/2): ${res.foo}`))
+                $.get('/staticjson').done(res2 => {
+                    $('body').append($('<div>').text(`STAT (2/2 continuation): ${res2.foo}`))
+                })
+            })
+            $.get('/dynamicjson').done(res => {
+                $('body').append($('<div>').text(`SIMPLEDYN (1/2): ${res.foo} ${res.index}`))
+                $.get('/dynamicjson').done(res2 => {
+                    $('body').append($('<div>').text(`SIMPLEDYN (2/2 continuation): ${res2.foo} ${res2.index}`))
+                })
+            })
+            $.get('/dynamicjsonwith-parallel-requests').done(res => {
+                $('body').append($('<div>').text(`PAR (1/3): ${res.foo} ${res.index}`))
+                $.get('/dynamicjsonwith-parallel-requests').done(res =>
+                        $('body').append($('<div>').text(`PAR (2/3 continuation): ${res.foo} ${res.index}`)))
+            })
+            $.get('/dynamicjsonwith-parallel-requests').done(res2 =>
+                    $('body').append($('<div>').text(`PAR (3/3 parallel): ${res2.foo} ${res2.index}`)))
+
+            $.get('/dynamicjsonwith-delayed').done(res => {
+                $('body').append($('<div>').text(`DYN (1/3): ${res.foo} ${res.index}`))
+                $.get('/dynamicjsonwith-delayed').done(res =>
+                        $('body').append($('<div>').text(`DYN (2/3 continuation): ${res.foo} ${res.index}`)))
+            })
+            setTimeout(()=>
+                    $.get('/dynamicjsonwith-delayed').done(res2 =>
+                            $('body').append($('<div>').text(`DYN (3/3 delayed): ${res2.foo} ${res2.index}`))), 1000)
+        })
+    </script>
+</head>
+<body>
+</body>
