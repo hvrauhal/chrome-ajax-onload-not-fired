@@ -1,0 +1,5 @@
+{
+  "name": "chrome-cache-ajax-horrors",
+  "description": "An app that demonstrates how Chrome 52.0.2743.116 fails to execute success handlers",
+  "repository": "https://github.com/hvrauhal/chrome-cache-ajax-horrors"
+}

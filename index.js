@@ -21,7 +21,7 @@ let j = 1
 app.get('/dynamicjsonwith-delayed', (req, res) => res.json(Object.assign({}, fooBar, {index: j++})))
 let k = 1
 app.get('/dynamicjsonwith-parallel-requests', (req, res) => res.json(Object.assign({}, fooBar, {index: k++})))
-const listeningApp = app.listen(0, function (err) {
+const listeningApp = app.listen(process.env.PORT || 0, function (err) {
   const indexHtml = 'http://localhost:' + listeningApp.address().port
   console.log(`open at ${indexHtml}`)
 })
