@@ -7,7 +7,6 @@ app.use((req, res, next) => {
   console.log('Before:', req.url)
   next()
 })
-app.get('/jquery.js', serveFile(require.resolve('jquery')))
 app.get('/', serveFile(path.join(__dirname, 'index.html')))
 var fooBar = {foo: 'bar'}
 app.get('/staticjson', (req, res) => res.json(fooBar))
