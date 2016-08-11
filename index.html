@@ -4,11 +4,14 @@
     <meta charset="utf-8">
     <title>foo</title>
     <script>
+        let requestIdCounter = 0
         const get = (url, cb) => {
             const xhr = new XMLHttpRequest()
+            const requestId = requestIdCounter++
+            console.log(`${requestId} open ${url}`)
             xhr.open('GET', url)
             xhr.onload = function () {
-                console.log('onload')
+                console.log(`${requestId} onload ${url}`)
                 if (xhr.status === 200) {
                     cb(JSON.parse(xhr.responseText))
                 } else if (xhr.status === 304) {
